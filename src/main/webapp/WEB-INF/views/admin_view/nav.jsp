@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
-    <div class="position-sticky pt-3">
+    <div class="position-sticky pt-3 tree-view">
         <ul class="nav nav-tabs flex-column">
             <li class="nav-item">
                 <a class="nav-link" href="<c:url value="/admin"/>">
@@ -16,10 +16,26 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="<c:url value="/product"/>">
+                <a class="nav-link" href="" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false">
                     <i class="fas fa-tshirt"></i>
                     Sản phẩm
                 </a>
+                <div class="collapse" id="dashboard-collapse">
+                    <ul style="list-style-type: none">
+                        <li class="nav-item">
+                            <a href="<c:url value="/product/male"/>" class="nav-link">
+                                <i class="fas fa-user"></i>
+                                Đồ nam
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="<c:url value="/product/female"/>" class="nav-link">
+                                <i class="far fa-user"></i>
+                                Đồ nữ
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="">

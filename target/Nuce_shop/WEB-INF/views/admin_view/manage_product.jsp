@@ -115,39 +115,47 @@
                     </div>
                     <table class="table table-bordered">
                         <colgroup>
-                            <col width="5%" span="1">
-                            <col width="20%" span="3">
-                            <col width="15%" span="1">
                             <col width="20%" span="1">
+                            <col width="15%" span="3">
+                            <col width="7%" span="2">
+                            <col width="10%" span="1">
                         </colgroup>
                         <thead>
                         <tr>
-                            <th>Stt</th>
                             <th>Tên sản phẩm</th>
                             <th>Giá</th>
                             <th>Ảnh</th>
                             <th>Danh mục</th>
+                            <th>Active</th>
+                            <th>Thứ tự</th>
                             <th>Hành động</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <%
-                            int stt = (int) request.getAttribute("page_id");
-                        %>
                         <c:forEach items="${list}" var="product">
                             <tr>
-                                <td><%=stt%>
-                                </td>
                                 <td>${product.name}</td>
                                 <td>${product.price} vnd</td>
                                 <td><img style="width:70px"
                                          src="<c:url value="/resources/images/product/${product.image}"/>" ></td>
                                 <td>${product.category.name}</td>
                                 <td>
+                                    <c:choose>
+                                        <c:when test="${product.active}">
+                                            <input type="checkbox" class="form-check-input" disabled checked/>
+                                        </c:when>
+                                        <c:when test="${!product.active}">
+                                            <input type="checkbox" class="form-check-input" disabled/>
+                                        </c:when>
+                                    </c:choose>
+                                </td>
+                                <td>${product.priority}</td>
+                                <td>
                                     <a href="<c:url value="/product/detail-product/${product.id}"/>"
                                        title="Chi tiết"><i class="fas fa-info-circle"></i></a>
                                     <a href="<c:url value="/product/image/${product.id}"/>"
                                        title="Ảnh"><i class="fas fa-image"></i></a>
+                                    <br>
                                     <a href="<c:url value="/product/edit-product/${product.id}"/>" class="edit"
                                        title="Sửa"><i class="fas fa-pen"></i></a>
                                     <a href="<c:url value="/product/delete-product/${product.id}"/>" class="delete"
@@ -155,25 +163,15 @@
                                             class="fas fa-trash-alt"></i></a>
                                 </td>
                             </tr>
-                            <%
-                                stt++;
-                            %>
                         </c:forEach>
                         </tbody>
                     </table>
                     <div class="container">
                         <ul class="pagination">
                             <c:forEach begin="1" end="${num_page}" var="i">
-                                <c:choose>
-                                    <c:when test="${i==num}">
-                                        <li class="page-item active"><a href="<c:url value="/category/${i}"/>"
-                                                                        class="page-link">${i}</a></li>
-                                    </c:when>
-                                    <c:when test="${i!=num}">
-                                        <li class="page-item"><a href="<c:url value="/category/${i}"/>"
-                                                                 class="page-link">${i}</a></li>
-                                    </c:when>
-                                </c:choose>
+                                <li class="page-item">
+                                    <a href="" class="page-link">${i}</a>
+                                </li>
                             </c:forEach>
                         </ul>
                     </div>

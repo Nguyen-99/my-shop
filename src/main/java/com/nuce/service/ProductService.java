@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -49,12 +51,45 @@ public class ProductService implements ProductDao {
     public List<Product> getProductByCategory(int id) {
         return productDao.getProductByCategory(id);
     }
+    public List<Product> getProductByCategoryUserView(int id) {
+        List<Product> products=new ArrayList<>();
+        List<Product> productList=getProductByCategory(id);
+        for (Product product:productList) {
+            if(product.isActive()){
+                products.add(product);
+            }
+        }
+        Collections.sort(products, new Comparator<Product>() {
+            @Override
+            public int compare(Product o1, Product o2) {
+                return o1.getPriority()-o2.getPriority();
+            }
+        });
+        return products;
+    }
+
     public List<Product> getProductByGender(boolean gender){
         List<Product> products=new ArrayList<>();
         List<Category> categories=categoryService.getCategoryByGender(gender);
         for (Category category:categories) {
             products.addAll(getProductByCategory(category.getId()));
         }
+        return products;
+    }
+    public List<Product> getProductByGenderUserView(boolean gender){
+        List<Product> products=new ArrayList<>();
+        List<Product> productList=getProductByGender(gender);
+        for (Product product:productList) {
+            if(product.isActive()){
+                products.add(product);
+            }
+        }
+        Collections.sort(products, new Comparator<Product>() {
+            @Override
+            public int compare(Product o1, Product o2) {
+                return o1.getPriority()-o2.getPriority();
+            }
+        });
         return products;
     }
 

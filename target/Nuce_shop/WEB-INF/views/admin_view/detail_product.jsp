@@ -56,8 +56,17 @@
 </head>
 <body>
 <section class="product-shop spad page-details">
-    <a style="margin-left: 30px;" class="btn btn-info add-new" href="<c:url value="/product"/>"><i
-            class="fa arrow_back"></i></a>
+    <c:choose>
+        <c:when test="${product.category.gender}">
+            <a style="margin-left: 30px;" class="btn btn-info add-new" href="<c:url value="/product/male"/>"><i
+                    class="fa arrow_back"></i></a>
+        </c:when>
+        <c:when test="${!product.category.gender}">
+            <a style="margin-left: 30px;" class="btn btn-info add-new" href="<c:url value="/product/female"/>"><i
+                    class="fa arrow_back"></i></a>
+        </c:when>
+    </c:choose>
+
     <div class="container">
         <div class="row">
             <div class="col-lg-10" style="border: 2px solid #1a1e21;padding: 25px;margin: auto">
@@ -134,7 +143,7 @@
                         <h4><b>Chi tiết số lượng</b></h4>
                     </div>
                     <div class="col-sm-4">
-                        <a href="" class="btn btn-info add-new" data-toggle="modal" data-bs-target="#add"><i
+                        <a href="" class="btn btn-info add-new" data-toggle="modal" data-target="#add"><i
                                 class="fa fa-plus"></i> Thêm mới</a>
                     </div>
                     <!-- Modal -->

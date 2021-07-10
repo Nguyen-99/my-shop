@@ -6,7 +6,7 @@ import com.nuce.model.Category;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.*;
 
 @Service
 public class CategoryService implements CategoryDao {
@@ -44,6 +44,19 @@ public class CategoryService implements CategoryDao {
 
     @Override
     public List<Category> getCategoryByGender(boolean gender) {
-        return categoryDao.getCategoryByGender(gender);
+        List<Category> categories=new ArrayList<>();
+        List<Category> categoryList=categoryDao.getCategoryByGender(gender);
+        Collections.sort(categoryList, new Comparator<Category>() {
+            @Override
+            public int compare(Category o1, Category o2) {
+                return o1.getPriority()-o2.getPriority();
+            }
+        });
+        for (Category category:categoryList) {
+            if(category.isActive()){
+                categories.add(category);
+            }
+        }
+        return categories;
     }
 }

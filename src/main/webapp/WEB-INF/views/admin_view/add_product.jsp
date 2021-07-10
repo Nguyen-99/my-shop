@@ -29,7 +29,7 @@
             <div class="form">
                 <c:url value="/product/add-product" var="url"/>
                 <form:form modelAttribute="product" method="post" action="${url}" enctype="multipart/form-data">
-                    <div class="form-group row">
+                    <div class="form-group">
                         <label>Tên sản phẩm</label>
                         <form:input path="name" class="form-control" required="true"/>
                         <label>Giá</label>
@@ -38,6 +38,11 @@
                         <input type="file" name="file" class="form-control"/>
                         <label>Mổ tả</label>
                         <form:textarea path="description" class="form-control"/>
+                        <lable>Hiển thị</lable>
+                        <form:checkbox path="active"/>
+                        <br>
+                        <label>Thứ tự</label>
+                        <form:input type="number" path="priority" class="form-control"/>
                         <label>Danh mục</label>
                         <select name="category_id" class="form-control" required="true">
                             <c:forEach items="${categories}" var="category">
@@ -47,7 +52,7 @@
                     </div>
                     <br>
                     <div class="text-end">
-                        <a href="<c:url value="/product"/>" class="btn btn-primary">Trở lại</a>
+                        <input type="reset" class="btn btn-primary" value="Reset">
                         <input type="submit" class="btn btn-primary" value="Thêm">
                     </div>
                 </form:form>

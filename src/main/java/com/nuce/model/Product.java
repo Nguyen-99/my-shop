@@ -1,6 +1,6 @@
 package com.nuce.model;
 
-import org.springframework.web.multipart.MultipartFile;
+import java.util.Date;
 
 public class Product {
     private int id;
@@ -8,6 +8,9 @@ public class Product {
     private double price;
     private String image;
     private String description;
+    private boolean active;
+    private int priority;
+    private Date createTime;
     private Category category;
 
     public Product() {
@@ -51,6 +54,30 @@ public class Product {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public int getPriority() {
+        return priority;
+    }
+
+    public void setPriority(int priority) {
+        this.priority = priority;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 
     public Category getCategory() {

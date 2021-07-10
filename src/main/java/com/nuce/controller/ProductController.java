@@ -1,5 +1,6 @@
 package com.nuce.controller;
 
+import com.nuce.model.Category;
 import com.nuce.model.DetailProduct;
 import com.nuce.model.Image;
 import com.nuce.model.Product;
@@ -28,31 +29,20 @@ public class ProductController {
     private DetailProductService detailProductService;
     @Autowired
     private ImageService imageService;
-    @GetMapping
-    public String view(ModelMap modelMap) {
-        modelMap.addAttribute("list", productService.getByPage(1, 7));
-        int numPage = (int) Math.ceil((double) productService.getAll().size() / 7);
-        modelMap.addAttribute("num_page", numPage);
-        modelMap.addAttribute("page_id", 1);
+    @GetMapping("/male")
+    public String viewMale(ModelMap modelMap) {
+        modelMap.addAttribute("list", productService.getProductByGender(true));
+        int numPage= (int) Math.ceil((double) productService.getProductByGender(true).size()/7);
+        modelMap.addAttribute("num_page",numPage);
         return "admin_view/manage_product";
     }
-
-    @GetMapping("/{pageId}")
-    public String viewByPage(ModelMap modelMap, @PathVariable("pageId") int pageId) {
-        int total = 7;
-        int num = pageId;
-        if (pageId == 1) {
-        } else {
-            pageId = (pageId - 1) * total + 1;
-        }
-        int numPage = (int) Math.ceil((double) productService.getAll().size() / total);
-        modelMap.addAttribute("num", num);
-        modelMap.addAttribute("page_id", pageId);
-        modelMap.addAttribute("num_page", numPage);
-        modelMap.addAttribute("list", productService.getByPage(pageId, total));
-        return "admin_view/manage_category";
+    @GetMapping("/female")
+    public String viewFemale(ModelMap modelMap) {
+        modelMap.addAttribute("list", productService.getProductByGender(false));
+        int numPage= (int) Math.ceil((double) productService.getProductByGender(false).size()/7);
+        modelMap.addAttribute("num_page",numPage);
+        return "admin_view/manage_product";
     }
-
     @GetMapping("/add-product")
     public String addProduct(ModelMap modelMap) {
         Product product = new Product();
@@ -78,25 +68,35 @@ public class ProductController {
             e.printStackTrace();
         }
         product.setImage(file.getOriginalFilename());
-        product.setCategory(categoryService.getById(categoryId));
+        Category category= categoryService.getById(categoryId);
+        product.setCategory(category);
         boolean check = productService.insert(product);
         if (check) {
             redirectAttributes.addFlashAttribute("msg", "Thêm mới thành công");
         } else {
             redirectAttributes.addFlashAttribute("msg", "Thêm mới thất bại");
         }
-        return "redirect:/product";
+        if(category.isGender()){
+            return "redirect:/product/male";
+        }else {
+            return "redirect:/product/female";
+        }
     }
 
     @GetMapping("/delete-product/{id}")
     public String deleteProduct(@PathVariable("id") int id, RedirectAttributes redirectAttributes) {
+        Category category=productService.getById(id).getCategory();
         boolean check = productService.delete(id);
         if (check) {
             redirectAttributes.addFlashAttribute("msg", "Xóa thành công");
         } else {
             redirectAttributes.addFlashAttribute("msg", "Xóa thất bại");
         }
-        return "redirect:/product";
+        if(category.isGender()){
+            return "redirect:/product/male";
+        }else {
+            return "redirect:/product/female";
+        }
     }
 
     @GetMapping("/edit-product/{id}")
@@ -126,16 +126,20 @@ public class ProductController {
             System.out.println(file.getOriginalFilename());
             product.setImage(file.getOriginalFilename());
         }
-        product.setCategory(categoryService.getById(categoryId));
+        Category category=categoryService.getById(categoryId);
+        product.setCategory(category);
         boolean check = productService.update(product);
         if (check) {
             redirectAttributes.addFlashAttribute("msg", "Sửa thành công");
         } else {
             redirectAttributes.addFlashAttribute("msg", "Sửa thất bại");
         }
-        return "redirect:/product";
+        if(category.isGender()){
+            return "redirect:/product/male";
+        }else {
+            return "redirect:/product/female";
+        }
     }
-
     @GetMapping("/detail-product/{id}")
     public String detailProduct(@PathVariable("id") int id, ModelMap modelMap) {
         modelMap.addAttribute("product", productService.getById(id));

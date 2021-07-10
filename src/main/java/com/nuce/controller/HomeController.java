@@ -34,25 +34,25 @@ public class HomeController {
     @GetMapping("/danhmuc/nam")
     public String men(ModelMap modelMap){
         modelMap.addAttribute("list_category",categoryService.getCategoryByGender(true));
-        modelMap.addAttribute("list_product",productService.getProductByGender(true));
+        modelMap.addAttribute("list_product",productService.getProductByGenderUserView(true));
         return "user_view/men";
     }
     @GetMapping("/danhmuc/nam/{id}")
     public String productByCategory(ModelMap modelMap, @PathVariable("id") int id){
         modelMap.addAttribute("list_category",categoryService.getCategoryByGender(true));
-        modelMap.addAttribute("list_product",productService.getProductByCategory(id));
+        modelMap.addAttribute("list_product",productService.getProductByCategoryUserView(id));
         return "user_view/product1";
     }
     @GetMapping("/danhmuc/nu")
     public String women(ModelMap modelMap){
         modelMap.addAttribute("list_category",categoryService.getCategoryByGender(false));
-        modelMap.addAttribute("list_product",productService.getProductByGender(false));
+        modelMap.addAttribute("list_product",productService.getProductByGenderUserView(false));
         return "user_view/women";
     }
     @GetMapping("/danhmuc/nu/{id}")
     public String productByCategory2(ModelMap modelMap, @PathVariable("id") int id){
         modelMap.addAttribute("list_category",categoryService.getCategoryByGender(false));
-        modelMap.addAttribute("list_product",productService.getProductByCategory(id));
+        modelMap.addAttribute("list_product",productService.getProductByCategoryUserView(id));
         return "user_view/product2";
     }
     @GetMapping("/sanpham/{id}")

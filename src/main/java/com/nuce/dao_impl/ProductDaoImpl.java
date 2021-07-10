@@ -4,9 +4,6 @@ import com.nuce.dao.ProductDao;
 import com.nuce.model.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +27,9 @@ public class ProductDaoImpl implements ProductDao {
                 product.setPrice(rs.getDouble("price"));
                 product.setImage(rs.getString("image"));
                 product.setDescription(rs.getString("description"));
+                product.setActive(rs.getBoolean("active"));
+                product.setPriority(rs.getInt("priority"));
+                product.setCreateTime(rs.getTimestamp("create_time"));
                 product.setCategory(categoryDao.getById(rs.getInt("category_id")));
                 products.add(product);
             }
@@ -56,6 +56,9 @@ public class ProductDaoImpl implements ProductDao {
                 product.setPrice(rs.getDouble("price"));
                 product.setImage(rs.getString("image"));
                 product.setDescription(rs.getString("description"));
+                product.setActive(rs.getBoolean("active"));
+                product.setPriority(rs.getInt("priority"));
+                product.setCreateTime(rs.getTimestamp("create_time"));
                 product.setCategory(categoryDao.getById(rs.getInt("category_id")));
                 products.add(product);
             }
@@ -80,6 +83,9 @@ public class ProductDaoImpl implements ProductDao {
             product.setPrice(rs.getDouble("price"));
             product.setImage(rs.getString("image"));
             product.setDescription(rs.getString("description"));
+            product.setActive(rs.getBoolean("active"));
+            product.setPriority(rs.getInt("priority"));
+            product.setCreateTime(rs.getTimestamp("create_time"));
             product.setCategory(categoryDao.getById(rs.getInt("category_id")));
             con.close();
         } catch (SQLException throwables) {
@@ -92,14 +98,19 @@ public class ProductDaoImpl implements ProductDao {
     public boolean insert(Product product) {
         boolean check=false;
         Connection con=JDBCConnection.getJDBCConnection();
-        String sql="insert into product(name,price,image,description,category_id) values (?,?,?,?,?)";
+        String sql="insert into product(name,price,image,description,active,priority,create_time,category_id) values (?,?,?,?,?,?,?,?)";
         try {
             PreparedStatement ps=con.prepareStatement(sql);
             ps.setString(1,product.getName());
             ps.setDouble(2,product.getPrice());
             ps.setString(3,product.getImage());
             ps.setString(4,product.getDescription());
-            ps.setInt(5,product.getCategory().getId());
+            ps.setBoolean(5,product.isActive());
+            ps.setInt(6,product.getPriority());
+            long time=System.currentTimeMillis();
+            Timestamp timestamp=new Timestamp(time);
+            ps.setTimestamp(7,timestamp);
+            ps.setInt(8,product.getCategory().getId());
             int rs=ps.executeUpdate();
             if(rs!=0){
                 check=true;
@@ -115,15 +126,17 @@ public class ProductDaoImpl implements ProductDao {
     public boolean update(Product product) {
         boolean check=false;
         Connection con=JDBCConnection.getJDBCConnection();
-        String sql="update product set name=?,price=?,image=?,description=?,category_id=? where id=?";
+        String sql="update product set name=?,price=?,image=?,description=?,active=?,priority=?,category_id=? where id=?";
         try {
             PreparedStatement ps=con.prepareStatement(sql);
             ps.setString(1, product.getName());
             ps.setDouble(2, product.getPrice());
             ps.setString(3,product.getImage());
             ps.setString(4,product.getDescription());
-            ps.setInt(5,product.getCategory().getId());
-            ps.setInt(6,product.getId());
+            ps.setBoolean(5,product.isActive());
+            ps.setInt(6,product.getPriority());
+            ps.setInt(7,product.getCategory().getId());
+            ps.setInt(8,product.getId());
             int rs=ps.executeUpdate();
             if(rs!=0){
                 check=true;
@@ -170,6 +183,9 @@ public class ProductDaoImpl implements ProductDao {
                 product.setPrice(rs.getDouble("price"));
                 product.setImage(rs.getString("image"));
                 product.setDescription(rs.getString("description"));
+                product.setActive(rs.getBoolean("active"));
+                product.setPriority(rs.getInt("priority"));
+                product.setCreateTime(rs.getTimestamp("create_time"));
                 product.setCategory(categoryDao.getById(rs.getInt("category_id")));
                 products.add(product);
             }
