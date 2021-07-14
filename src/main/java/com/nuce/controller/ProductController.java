@@ -17,6 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.*;
+import java.util.List;
 
 @Controller
 @RequestMapping("/product")
@@ -34,13 +35,85 @@ public class ProductController {
         modelMap.addAttribute("list", productService.getProductByGender(true));
         int numPage= (int) Math.ceil((double) productService.getProductByGender(true).size()/7);
         modelMap.addAttribute("num_page",numPage);
+        modelMap.addAttribute("categories",categoryService.getCategoryByGender(true));
+        modelMap.addAttribute("gender",true);
         return "admin_view/manage_product";
     }
     @GetMapping("/female")
     public String viewFemale(ModelMap modelMap) {
-        modelMap.addAttribute("list", productService.getProductByGender(false));
+        modelMap.addAttribute("list", productService.getByPage(false,1,7));
         int numPage= (int) Math.ceil((double) productService.getProductByGender(false).size()/7);
         modelMap.addAttribute("num_page",numPage);
+        modelMap.addAttribute("categories",categoryService.getCategoryByGender(false));
+        modelMap.addAttribute("gender",false);
+        return "admin_view/manage_product";
+    }
+    @GetMapping("/male/{pageId}")
+    public String viewMaleByPage(ModelMap modelMap,@PathVariable("pageId") int pageId){
+        int total=7;
+        int n=pageId;
+        if(n==1){
+        }else {
+            n=(n-1)*total+1;
+        }
+        int numPage=(int) Math.ceil((double) productService.getProductByGender(true).size()/total);
+        modelMap.addAttribute("list",productService.getByPage(true,n,total));
+        modelMap.addAttribute("num_page",numPage);
+        modelMap.addAttribute("page_id",pageId);
+        modelMap.addAttribute("gender",true);
+        modelMap.addAttribute("categories",categoryService.getCategoryByGender(true));
+        return "admin_view/manage_product";
+    }
+    @GetMapping("/female/{pageId}")
+    public String viewFemaleByPage(ModelMap modelMap,@PathVariable("pageId") int pageId){
+        int total=7;
+        int n=pageId;
+        if(n==1){
+        }else {
+            n=(n-1)*total+1;
+        }
+        int numPage=(int) Math.ceil((double) productService.getProductByGender(false).size()/total);
+        modelMap.addAttribute("list",productService.getByPage(false,n,total));
+        modelMap.addAttribute("num_page",numPage);
+        modelMap.addAttribute("page_id",pageId);
+        modelMap.addAttribute("gender",false);
+        modelMap.addAttribute("categories",categoryService.getCategoryByGender(false));
+        return "admin_view/manage_product";
+    }
+    @GetMapping("/male/search")
+    public String searchMale(ModelMap modelMap, @RequestParam("category_id") int categoryId,@RequestParam("query") String query){
+        if(categoryId==0&&query.equals("")){
+            return "redirect:/product/female";
+        }
+        List<Product> products=null;
+        if(categoryId==0){
+            products=productService.search(true,query);
+        }else {
+            products=productService.search(true,categoryId,query);
+        }
+        modelMap.addAttribute("list",products);
+        modelMap.addAttribute("categories",categoryService.getCategoryByGender(true));
+        modelMap.addAttribute("query",query);
+        modelMap.addAttribute("category",categoryService.getById(categoryId));
+        modelMap.addAttribute("gender",true);
+        return "admin_view/manage_product";
+    }
+    @GetMapping("/female/search")
+    public String searchFemale(ModelMap modelMap, @RequestParam("category_id") int categoryId,@RequestParam("query") String query){
+        if(categoryId==0&&query.equals("")){
+            return "redirect:/product/female";
+        }
+        List<Product> products=null;
+        if(categoryId==0){
+            products=productService.search(false,query);
+        }else {
+            products=productService.search(false,categoryId,query);
+        }
+        modelMap.addAttribute("list",products);
+        modelMap.addAttribute("categories",categoryService.getCategoryByGender(false));
+        modelMap.addAttribute("query",query);
+        modelMap.addAttribute("category",categoryService.getById(categoryId));
+        modelMap.addAttribute("gender",false);
         return "admin_view/manage_product";
     }
     @GetMapping("/add-product")
@@ -228,7 +301,6 @@ public class ProductController {
             image.setProduct(productService.getById(productId));
             imageService.update(image);
         }
-
         return "redirect:/product/image/"+productId;
     }
     @GetMapping("/image/delete/{id}")

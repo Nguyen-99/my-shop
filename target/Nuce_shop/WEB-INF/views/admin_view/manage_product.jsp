@@ -113,6 +113,44 @@
                             </div>
                         </div>
                     </div>
+                    <c:choose>
+                        <c:when test="${gender}">
+                            <form action="<c:url value="/product/male/search"/>" class="d-flex col-sm-8">
+                                <select name="category_id">
+                                    <c:if test="${category!=null}">
+                                        <option value="${category.id}">${category.name}</option>
+                                    </c:if>
+                                    <option value="0">Chọn danh mục</option>
+                                    <c:forEach items="${categories}" var="c">
+                                        <c:if test="${c.id!=category.id}">
+                                            <option value="${c.id}">${c.name}</option>
+                                        </c:if>
+                                    </c:forEach>
+                                </select>
+                                <input name="query" class="form-control me-2" type="search" placeholder="Search" value="${query}">
+                                <button class="btn btn-outline-success" type="submit">Search</button>
+                            </form>
+                        </c:when>
+                        <c:when test="${!gender}">
+                            <form action="<c:url value="/product/female/search"/>" class="d-flex col-sm-8">
+                                <select name="category_id">
+                                    <c:if test="${category!=null}">
+                                        <option value="${category.id}">${category.name}</option>
+                                    </c:if>
+                                    <option value="0">Chọn danh mục</option>
+                                    <c:forEach items="${categories}" var="c">
+                                        <c:if test="${c.id!=category.id}">
+                                            <option value="${c.id}">${c.name}</option>
+                                        </c:if>
+                                    </c:forEach>
+                                </select>
+                                <input name="query" class="form-control me-2" type="search" placeholder="Search" value="${query}">
+                                <button class="btn btn-outline-success" type="submit">Search</button>
+                            </form>
+                        </c:when>
+                    </c:choose>
+
+                    <br>
                     <table class="table table-bordered">
                         <colgroup>
                             <col width="20%" span="1">
@@ -168,11 +206,23 @@
                     </table>
                     <div class="container">
                         <ul class="pagination">
-                            <c:forEach begin="1" end="${num_page}" var="i">
-                                <li class="page-item">
-                                    <a href="" class="page-link">${i}</a>
-                                </li>
-                            </c:forEach>
+                            <c:choose>
+                                <c:when test="${gender}">
+                                    <c:forEach begin="1" end="${num_page}" var="i">
+                                        <li class="page-item">
+                                            <a href="<c:url value="/product/male/${i}"/>" class="page-link">${i}</a>
+                                        </li>
+                                    </c:forEach>
+                                </c:when>
+                                <c:when test="${!gender}">
+                                    <c:forEach begin="1" end="${num_page}" var="i">
+                                        <li class="page-item">
+                                            <a href="<c:url value="/product/female/${i}"/>" class="page-link">${i}</a>
+                                        </li>
+                                    </c:forEach>
+                                </c:when>
+                            </c:choose>
+
                         </ul>
                     </div>
                 </div>

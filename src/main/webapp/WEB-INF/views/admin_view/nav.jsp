@@ -16,32 +16,48 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false">
+                <a class="nav-link" href="" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse">
                     <i class="fas fa-tshirt"></i>
                     Sản phẩm
                 </a>
-                <div class="collapse" id="dashboard-collapse">
-                    <ul style="list-style-type: none">
-                        <li class="nav-item">
-                            <a href="<c:url value="/product/male"/>" class="nav-link">
-                                <i class="fas fa-user"></i>
-                                Đồ nam
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="<c:url value="/product/female"/>" class="nav-link">
-                                <i class="far fa-user"></i>
-                                Đồ nữ
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="">
-                    <i class="fas fa-store"></i>
-                    Nhập kho
-                </a>
+                <c:choose>
+                    <c:when test="${gender!=null}">
+                        <div class="collapse show" id="dashboard-collapse">
+                            <ul style="list-style-type: none">
+                                <li class="nav-item">
+                                    <a href="<c:url value="/product/male"/>" class="nav-link">
+                                        <i class="fas fa-user"></i>
+                                        Đồ nam
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="<c:url value="/product/female"/>" class="nav-link">
+                                        <i class="far fa-user"></i>
+                                        Đồ nữ
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </c:when>
+                    <c:when test="${gender==null}">
+                        <div class="collapse" id="dashboard-collapse">
+                            <ul style="list-style-type: none">
+                                <li class="nav-item">
+                                    <a href="<c:url value="/product/male"/>" class="nav-link">
+                                        <i class="fas fa-user"></i>
+                                        Đồ nam
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="<c:url value="/product/female"/>" class="nav-link">
+                                        <i class="far fa-user"></i>
+                                        Đồ nữ
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </c:when>
+                </c:choose>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="">
@@ -58,7 +74,7 @@
             <li class="nav-item">
                 <a class="nav-link" href="">
                     <i class="fas fa-money-bill"></i>
-                    Hóa đơn
+                    Đơn hàng
                 </a>
             </li>
         </ul>

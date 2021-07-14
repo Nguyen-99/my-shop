@@ -23,8 +23,8 @@ public class ProductService implements ProductDao {
         return productDao.getAll();
     }
 
-    public List<Product> getByPage(int pageId, int total) {
-        return productDao.getByPage(pageId,total);
+    public List<Product> getByPage(boolean gender,int n, int total) {
+        return productDao.getByPage(gender,n,total);
     }
 
     @Override
@@ -51,6 +51,21 @@ public class ProductService implements ProductDao {
     public List<Product> getProductByCategory(int id) {
         return productDao.getProductByCategory(id);
     }
+
+    @Override
+    public List<Product> search(boolean gender,int categoryId, String query) {
+        if(categoryId==0){
+            return search(gender,query);
+        }
+        return productDao.search(gender,categoryId,query);
+    }
+
+    @Override
+    public List<Product> search(boolean gender, String query) {
+        return productDao.search(gender,query);
+    }
+
+
     public List<Product> getProductByCategoryUserView(int id) {
         List<Product> products=new ArrayList<>();
         List<Product> productList=getProductByCategory(id);

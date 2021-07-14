@@ -40,14 +40,15 @@ public class ProductDaoImpl implements ProductDao {
         return products;
     }
 
-    public List<Product> getByPage(int pageId, int total) {
+    public List<Product> getByPage(boolean gender,int n, int total) {
         List<Product> products=new ArrayList<>();
         Connection con=JDBCConnection.getJDBCConnection();
-        String sql="select * from product limit ?,?";
+        String sql="select * from product inner join category on product.category_id=category.id where category.gender= ? limit ?,?";
         try {
             PreparedStatement ps=con.prepareStatement(sql);
-            ps.setInt(1,pageId-1);
-            ps.setInt(2,total);
+            ps.setBoolean(1,gender);
+            ps.setInt(2,n-1);
+            ps.setInt(3,total);
             ResultSet rs=ps.executeQuery();
             while (rs.next()){
                 Product product=new Product();
@@ -70,23 +71,25 @@ public class ProductDaoImpl implements ProductDao {
 
     @Override
     public Product getById(int id) {
-        Product product=new Product();
+        Product product=null;
         Connection con=JDBCConnection.getJDBCConnection();
         String sql="select * from product where id=?";
         try {
             PreparedStatement ps=con.prepareStatement(sql);
             ps.setInt(1,id);
             ResultSet rs=ps.executeQuery();
-            rs.next();
-            product.setId(id);
-            product.setName(rs.getString("name"));
-            product.setPrice(rs.getDouble("price"));
-            product.setImage(rs.getString("image"));
-            product.setDescription(rs.getString("description"));
-            product.setActive(rs.getBoolean("active"));
-            product.setPriority(rs.getInt("priority"));
-            product.setCreateTime(rs.getTimestamp("create_time"));
-            product.setCategory(categoryDao.getById(rs.getInt("category_id")));
+            if(rs.next()){
+                product=new Product();
+                product.setId(id);
+                product.setName(rs.getString("name"));
+                product.setPrice(rs.getDouble("price"));
+                product.setImage(rs.getString("image"));
+                product.setDescription(rs.getString("description"));
+                product.setActive(rs.getBoolean("active"));
+                product.setPriority(rs.getInt("priority"));
+                product.setCreateTime(rs.getTimestamp("create_time"));
+                product.setCategory(categoryDao.getById(rs.getInt("category_id")));
+            }
             con.close();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -189,6 +192,72 @@ public class ProductDaoImpl implements ProductDao {
                 product.setCategory(categoryDao.getById(rs.getInt("category_id")));
                 products.add(product);
             }
+            con.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return products;
+    }
+
+    @Override
+    public List<Product> search(boolean gender, String query) {
+        List<Product> products=new ArrayList<>();
+        Connection con=JDBCConnection.getJDBCConnection();
+        String sql="select * from product inner join category on product.category_id=category.id where " +
+                "(category.gender=? and (lower(product.name) like lower(?) or lower(category.name) like lower(?)))";
+        try {
+            PreparedStatement ps=con.prepareStatement(sql);
+            ps.setBoolean(1,gender);
+            ps.setString(2,"%"+query+"%");
+            ps.setString(3,"%"+query+"%");
+            ResultSet rs=ps.executeQuery();
+            while (rs.next()){
+                Product product=new Product();
+                product.setId(rs.getInt("id"));
+                product.setName(rs.getString("name"));
+                product.setPrice(rs.getDouble("price"));
+                product.setImage(rs.getString("image"));
+                product.setDescription(rs.getString("description"));
+                product.setActive(rs.getBoolean("active"));
+                product.setPriority(rs.getInt("priority"));
+                product.setCreateTime(rs.getTimestamp("create_time"));
+                product.setCategory(categoryDao.getById(rs.getInt("category_id")));
+                products.add(product);
+            }
+            con.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return products;
+    }
+
+    @Override
+    public List<Product> search(boolean gender,int categoryId,String query) {
+        List<Product> products=new ArrayList<>();
+        Connection con=JDBCConnection.getJDBCConnection();
+        String sql="select * from product inner join category on product.category_id=category.id where" +
+                " (category.gender=? and product.category_id=? and (lower(product.name) like lower(?) or lower(category.name) like lower(?)))";
+        try {
+            PreparedStatement ps=con.prepareStatement(sql);
+            ps.setBoolean(1,gender);
+            ps.setInt(2,categoryId);
+            ps.setString(3,"%"+query+"%");
+            ps.setString(4,"%"+query+"%");
+            ResultSet rs=ps.executeQuery();
+            while (rs.next()){
+                Product product=new Product();
+                product.setId(rs.getInt("id"));
+                product.setName(rs.getString("name"));
+                product.setPrice(rs.getDouble("price"));
+                product.setImage(rs.getString("image"));
+                product.setDescription(rs.getString("description"));
+                product.setActive(rs.getBoolean("active"));
+                product.setPriority(rs.getInt("priority"));
+                product.setCreateTime(rs.getTimestamp("create_time"));
+                product.setCategory(categoryDao.getById(rs.getInt("category_id")));
+                products.add(product);
+            }
+            con.close();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }

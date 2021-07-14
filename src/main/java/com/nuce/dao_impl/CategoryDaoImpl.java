@@ -59,20 +59,22 @@ public class CategoryDaoImpl implements CategoryDao {
 
     @Override
     public Category getById(int id) {
-        Category category=new Category();
+        Category category=null;
         Connection con=JDBCConnection.getJDBCConnection();
         String sql="select * from category where id=?";
         try {
             PreparedStatement ps=con.prepareStatement(sql);
             ps.setInt(1,id);
             ResultSet rs=ps.executeQuery();
-            rs.next();
-            category.setId(id);
-            category.setName(rs.getString("name"));
-            category.setGender(rs.getBoolean("gender"));
-            category.setActive(rs.getBoolean("active"));
-            category.setPriority(rs.getInt("priority"));
-            con.close();
+            if(rs.next()){
+                category=new Category();
+                category.setId(id);
+                category.setName(rs.getString("name"));
+                category.setGender(rs.getBoolean("gender"));
+                category.setActive(rs.getBoolean("active"));
+                category.setPriority(rs.getInt("priority"));
+                con.close();
+            }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
