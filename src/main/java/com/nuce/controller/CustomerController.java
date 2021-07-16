@@ -1,10 +1,14 @@
 package com.nuce.controller;
 
 import com.nuce.dao_impl.AddressDaoImpl;
+import com.nuce.model.Bill;
 import com.nuce.model.Customer;
+import com.nuce.model.OrderItem;
 import com.nuce.model.Province;
 import com.nuce.service.AddressService;
+import com.nuce.service.BillService;
 import com.nuce.service.CustomerService;
+import com.nuce.service.OrderItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -29,6 +33,10 @@ public class CustomerController {
     private CustomerService customerService;
     @Autowired
     private AddressService addressService;
+    @Autowired
+    private BillService billService;
+    @Autowired
+    private OrderItemService orderItemService;
     @GetMapping("/taikhoan")
     public String profile(ModelMap modelMap, HttpServletRequest request){
         HttpSession session=request.getSession();
@@ -65,5 +73,15 @@ public class CustomerController {
         session.setAttribute("customer",customer);
         return "redirect:/taikhoan";
     }
-
+    @GetMapping("/donmua")
+    public String order(ModelMap modelMap,HttpServletRequest request){
+        HttpSession session=request.getSession();
+        Customer customer= (Customer) session.getAttribute("customer");
+        List<Bill> bills=billService.getByCustomer(customer.getId());
+        for (Bill bill:bills) {
+            bill.setOrderItems(orderItemService.getByBill(bill.getId()));
+        }
+        modelMap.addAttribute("bills",bills);
+        return "user_view/order";
+    }
 }

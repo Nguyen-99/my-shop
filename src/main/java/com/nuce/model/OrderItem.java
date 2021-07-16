@@ -40,4 +40,8 @@ public class OrderItem {
     public void setBill(Bill bill) {
         this.bill = bill;
     }
+
+    public double getItemMoney(){
+        return detailProduct.getProduct().getPrice()*number;
+    }
 }

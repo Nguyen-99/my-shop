@@ -42,19 +42,7 @@
 </head>
 <body>
 <div class="container rounded bg-white mt-5">
-    <nav class="navbar navbar-expand-sm bg-light">
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link btn-light" href="#">Thông tin tài khoản</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link btn-light" href="#">Đơn mua</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link btn-light" href="#">Đổi mật khẩu</a>
-            </li>
-        </ul>
-    </nav>
+    <jsp:include page="nav1.jsp"/>
     <div class="row">
         <div class="col-md-3 border-right">
             <div class="d-flex flex-column align-items-center text-center py-5" style="margin-left: -55px;">

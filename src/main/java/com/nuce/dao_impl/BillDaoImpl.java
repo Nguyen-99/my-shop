@@ -27,7 +27,7 @@ public class BillDaoImpl implements BillDao {
             bill.setCustomer(customerDao.getById(rs.getInt("customer_id")));
             bill.setCreateDate(rs.getTimestamp("create_date"));
             bill.setDeliveryAddress(rs.getString("delivery_address"));
-            bill.setStatus(rs.getBoolean("status"));
+            bill.setStatus(rs.getString("status"));
             con.close();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -39,7 +39,7 @@ public class BillDaoImpl implements BillDao {
     public List<Bill> getByCustomer(int customerId) {
         List<Bill> bills=new ArrayList<>();
         Connection con=JDBCConnection.getJDBCConnection();
-        String sql="select * from bill where customer_id=?";
+        String sql="select * from bill where customer_id=? order by create_date desc";
         try {
             PreparedStatement ps=con.prepareStatement(sql);
             ps.setInt(1,customerId);
@@ -48,9 +48,9 @@ public class BillDaoImpl implements BillDao {
                 Bill bill=new Bill();
                 bill.setId(rs.getInt("id"));
                 bill.setCustomer(customerDao.getById(rs.getInt("customer_id")));
-                bill.setCreateDate(rs.getTimestamp("create_time"));
+                bill.setCreateDate(rs.getTimestamp("create_date"));
                 bill.setDeliveryAddress(rs.getString("delivery_address"));
-                bill.setStatus(rs.getBoolean("status"));
+                bill.setStatus(rs.getString("status"));
                 bills.add(bill);
             }
             con.close();
@@ -72,7 +72,7 @@ public class BillDaoImpl implements BillDao {
             Timestamp timestamp=new Timestamp(time);
             ps.setTimestamp(2,timestamp);
             ps.setString(3,bill.getDeliveryAddress());
-            ps.setBoolean(4,bill.isStatus());
+            ps.setString(4,bill.getStatus());
             int rs=ps.executeUpdate();
             if(rs>0){
                 ResultSet resultSet=ps.getGeneratedKeys();
@@ -87,4 +87,5 @@ public class BillDaoImpl implements BillDao {
         }
         return newBill;
     }
+
 }

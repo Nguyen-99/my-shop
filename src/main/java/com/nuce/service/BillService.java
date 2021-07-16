@@ -14,7 +14,7 @@ public class BillService implements BillDao {
     private BillDaoImpl billDao;
     @Override
     public Bill getById(int id) {
-        return billDao.getById(id) ;
+        return billDao.getById(id);
     }
 
     @Override

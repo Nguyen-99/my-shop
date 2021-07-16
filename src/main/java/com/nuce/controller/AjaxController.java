@@ -46,7 +46,6 @@ public class AjaxController {
             } catch (JsonProcessingException e) {
                 e.printStackTrace();
             }
-            System.out.println(ajaxResponse);
             return ajaxResponse;
         }
         return null;

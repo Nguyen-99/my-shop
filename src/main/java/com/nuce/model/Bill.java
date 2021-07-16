@@ -1,13 +1,17 @@
 package com.nuce.model;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 public class Bill {
     private int id;
     private Customer customer;
     private Date createDate;
     private String deliveryAddress;
-    private boolean status;
+    private String status;
+    private List<OrderItem> orderItems;
 
     public Bill() {
     }
@@ -44,11 +48,33 @@ public class Bill {
         this.deliveryAddress = deliveryAddress;
     }
 
-    public boolean isStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(boolean status) {
+    public void setStatus(String status) {
         this.status = status;
+    }
+
+    public List<OrderItem> getOrderItems() {
+        return orderItems;
+    }
+
+    public void setOrderItems(List<OrderItem> orderItems) {
+        this.orderItems = orderItems;
+    }
+
+    public double getBillMoney(){
+        double moneyBill=0;
+        for (OrderItem orderItem:orderItems) {
+            moneyBill+=orderItem.getItemMoney();
+        }
+        return moneyBill;
+    }
+
+    public String getDate(){
+        DateFormat dateFormat=new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+        String date=dateFormat.format(createDate);
+        return date;
     }
 }
