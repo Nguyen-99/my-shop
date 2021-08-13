@@ -27,7 +27,7 @@
         <jsp:include page="nav.jsp"/>
         <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
             <div class="form">
-                <c:url value="/product/add-product" var="url"/>
+                <c:url value="/admin/product/add-product" var="url"/>
                 <form:form modelAttribute="product" method="post" action="${url}" enctype="multipart/form-data">
                     <div class="form-group">
                         <label>Tên sản phẩm</label>

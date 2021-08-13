@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 
 
 @Controller
-@RequestMapping("/category")
+@RequestMapping("admin/category")
 public class CategoryController {
     @Autowired
     private CategoryService categoryService;

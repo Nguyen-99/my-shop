@@ -121,7 +121,7 @@
                                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                     aria-label="Close"></button>
                                         </div>
-                                        <form action="<c:url value="/category/add-category"/>" method="post">
+                                        <form action="<c:url value="admin/category/add-category"/>" method="post">
                                             <div class="modal-body">
                                                 <div class="form-group row">
                                                     <label class="col-sm-12 col-form-label">Tên danh mục</label>
@@ -215,7 +215,7 @@
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                             aria-label="Close"></button>
                                                 </div>
-                                                <form action="<c:url value="/category/edit-category"/>" method="post">
+                                                <form action="<c:url value="/admin/category/edit-category"/>" method="post">
                                                     <div class="modal-body">
                                                         <input type="hidden" name="id" value="${category.id}">
                                                         <div class="form-group row">
@@ -306,6 +306,5 @@
         </main>
     </div>
 </div>
-
 </body>
 </html>

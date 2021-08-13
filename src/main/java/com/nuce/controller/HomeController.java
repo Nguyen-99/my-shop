@@ -8,6 +8,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -62,5 +63,10 @@ public class HomeController {
         modelMap.addAttribute("sizes",detailProductService.getListSize(id));
         modelMap.addAttribute("colors",detailProductService.getListColor(id));
         return "user_view/detail";
+    }
+    @GetMapping("/timkiem")
+    public String search(ModelMap modelMap, @RequestParam("query") String query){
+        modelMap.addAttribute("list_product",productService.search(query));
+        return "user_view/search";
     }
 }

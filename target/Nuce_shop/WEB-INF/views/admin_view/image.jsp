@@ -65,7 +65,7 @@
                                         <h5 class="modal-title" id="exampleModalLabel">Thêm ảnh</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
-                                    <form action="<c:url value="/product/image/add"/>" method="post" enctype="multipart/form-data">
+                                    <form action="<c:url value="/admin/product/image/add"/>" method="post" enctype="multipart/form-data">
                                     <div class="modal-body">
                                         <input type="hidden" name="product_id" value="${product_id}">
                                         <input type="file" name="file">
@@ -102,7 +102,7 @@
                                                 <h5 class="modal-title">Sửa ảnh</h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
-                                            <form action="<c:url value="/product/image/edit"/>" method="post" enctype="multipart/form-data">
+                                            <form action="<c:url value="/admin/product/image/edit"/>" method="post" enctype="multipart/form-data">
                                                 <div class="modal-body">
                                                     <input type="hidden" name="id" value="${image.id}">
                                                     <input type="hidden" name="product_id" value="${product_id}">

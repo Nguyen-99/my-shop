@@ -32,16 +32,12 @@
             margin: auto;
         }
 
-        .form-signin .checkbox {
-            font-weight: 400;
-        }
-
         .form-signin .form-floating:focus-within {
             z-index: 2;
         }
 
-        .form-signin input[type="email"] {
-            margin-bottom: -1px;
+        .form-signin input[type="text"] {
+            margin-bottom: 10px;
             border-bottom-right-radius: 0;
             border-bottom-left-radius: 0;
         }
@@ -55,15 +51,13 @@
 </head>
 <body class="text-center">
 <main class="form-signin">
-    <form action="<c:url value="/admin/check"/>" method="post">
-        <h1 class="h3 mb-3 fw-normal">Admin đăng nhập</h1><br>
+    <form action="<c:url value="/check"/>" method="post">
+        <h1 class="h3 mb-3 fw-normal">Quản trị website</h1><br>
         <div class="form-floating">
-            <input name="username" type="text" class="form-control">
-            <label>Tên đăng nhập</label>
+            <input name="username" type="text" class="form-control" placeholder="Username">
         </div>
         <div class="form-floating">
-            <input name="password" type="password" class="form-control">
-            <label>Mật khẩu</label>
+            <input name="password" type="password" class="form-control" placeholder="Password">
         </div>
         <button class="w-100 btn btn-lg btn-primary" type="submit">Đăng nhập</button>
         <br><br>

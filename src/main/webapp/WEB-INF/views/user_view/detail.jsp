@@ -22,8 +22,8 @@
             <div class="col-lg-12">
                 <div class="breadcrumb-text product-more">
                     <a href="./home.html"><i class="fa fa-home"></i> Home</a>
-                    <a href="./shop.html">Shop</a>
-                    <span>Detail</span>
+                    <a href="./shop.html">Sản phẩm</a>
+                    <span>Chi tiết</span>
                 </div>
             </div>
         </div>
@@ -194,7 +194,7 @@
                    alert("Nhập trên 1 sản phẩm");
                }else {
                    if(customerId==""){
-                       alert("Vui lòng đăng nhập để dùng giỏ hàng")
+                       alert("Vui lòng đăng nhập")
                    }else {
                        $.ajax({
                            url:"<c:url value="/add-cart"/>",
@@ -222,18 +222,33 @@
         $("#buy").click(function (){
             var n=$("#n").val();
             var num=$("#num").val();
+            var color = $("[name=color]:checked").val();
+            var size = $("[name=size]:checked").val();
+            var productId = $("#product_id").val();
+            var customerId=$("#customer_id").val();
             if(num==""){
                 alert("Vui lòng chọn màu và size");
             }else {
-                if(isNaN(n)||n==""){
-                    alert("Nhập số thôi thằng lol");
+                if(parseFloat(n)==0){
+                    alert("Nhập trên 1 sản phẩm");
                 }else {
-                    if(parseFloat(n)>num) {
-                        alert("Vui lòng chọn số lượng nhỏ hơn hàng tồn");
+                    if(customerId==""){
+                        alert("Vui lòng đăng nhập")
                     }else {
-                        if(parseFloat(n)<1){
-                            alert("Nhập trên 1 sản phẩm");
-                        }
+                        $.ajax({
+                            url:"<c:url value="/buy-now"/>",
+                            type:"get",
+                            data:{
+                                color:color,
+                                size:size,
+                                productId:productId,
+                                n:n,
+                                customerId:customerId
+                            },
+                            success:function (){
+                                window.location.href="<c:url value="/thanh-toan"/>";
+                            }
+                        });
                     }
                 }
             }

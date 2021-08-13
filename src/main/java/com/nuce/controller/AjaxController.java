@@ -72,6 +72,25 @@ public class AjaxController {
             return "false";
         }
     }
+    @RequestMapping("/buy-now")
+    @ResponseBody
+    public String buyNow(HttpServletRequest request){
+        int productId= Integer.parseInt(request.getParameter("productId"));
+        String color=request.getParameter("color");
+        String size=request.getParameter("size");
+        DetailProduct detailProduct=detailProductService.getDetail(productId,size,color);
+        int customerId= Integer.parseInt(request.getParameter("customerId"));
+        int n= Integer.parseInt(request.getParameter("n"));
+        Item item=new Item();
+        item.setDetailProduct(detailProduct);
+        item.setNumber(n);
+        item.setCustomer(customerService.getById(customerId));
+        List<Item> items=new ArrayList<>();
+        items.add(item);
+        HttpSession session=request.getSession();
+        session.setAttribute("items",items);
+        return "ok";
+    }
     @RequestMapping("/update-cart")
     @ResponseBody
     public String updateteCart(HttpServletRequest request){

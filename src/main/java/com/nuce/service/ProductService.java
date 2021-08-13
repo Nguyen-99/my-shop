@@ -6,7 +6,6 @@ import com.nuce.model.Category;
 import com.nuce.model.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -63,6 +62,11 @@ public class ProductService implements ProductDao {
     @Override
     public List<Product> search(boolean gender, String query) {
         return productDao.search(gender,query);
+    }
+
+    @Override
+    public List<Product> search(String query) {
+        return productDao.search(query);
     }
 
 

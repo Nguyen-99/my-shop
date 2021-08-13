@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -87,5 +88,79 @@ public class BillDaoImpl implements BillDao {
         }
         return newBill;
     }
+    @Override
+    public List<Bill> getByDate(Date date) {
+        List<Bill> bills=null;
+        Connection con=JDBCConnection.getJDBCConnection();
+        String sql="select * from bill where create_date=?";
+        try {
+            PreparedStatement ps=con.prepareStatement(sql);
+            ps.setTimestamp(1, (Timestamp) date);
+            ResultSet rs=ps.executeQuery();
+            while (rs.next()){
+                bills=new ArrayList<>();
+                Bill bill=new Bill();
+                bill.setId(rs.getInt("id"));
+                bill.setCustomer(customerDao.getById(rs.getInt("customer_id")));
+                bill.setCreateDate(rs.getTimestamp("create_date"));
+                bill.setDeliveryAddress(rs.getString("delivery_address"));
+                bill.setStatus(rs.getString("status"));
+                bills.add(bill);
+            }
+            con.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return bills;
+    }
 
+    @Override
+    public List<Bill> getAll() {
+        List<Bill> bills=new ArrayList<>();
+        Connection con=JDBCConnection.getJDBCConnection();
+        String sql="select * from bill order by create_date desc";
+        try {
+            PreparedStatement ps=con.prepareStatement(sql);
+            ResultSet rs=ps.executeQuery();
+            while (rs.next()){
+                Bill bill=new Bill();
+                bill.setId(rs.getInt("id"));
+                bill.setCustomer(customerDao.getById(rs.getInt("customer_id")));
+                bill.setCreateDate(rs.getTimestamp("create_date"));
+                bill.setDeliveryAddress(rs.getString("delivery_address"));
+                bill.setStatus(rs.getString("status"));
+                bills.add(bill);
+            }
+            con.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return bills;
+    }
+
+    @Override
+    public List<Bill> searchByDate(Date date1, Date date2) {
+        List<Bill> bills=new ArrayList<>();
+        Connection con=JDBCConnection.getJDBCConnection();
+        String sql="select * from bill where (create_date >= ? and create_date <= ? ) order by create_date desc";
+        try {
+            PreparedStatement ps=con.prepareStatement(sql);
+            ps.setTimestamp(1, (Timestamp) date1);
+            ps.setTimestamp(2, (Timestamp) date2);
+            ResultSet rs=ps.executeQuery();
+            while (rs.next()){
+                Bill bill=new Bill();
+                bill.setId(rs.getInt("id"));
+                bill.setCustomer(customerDao.getById(rs.getInt("customer_id")));
+                bill.setCreateDate(rs.getTimestamp("create_date"));
+                bill.setDeliveryAddress(rs.getString("delivery_address"));
+                bill.setStatus(rs.getString("status"));
+                bills.add(bill);
+            }
+            con.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return bills;
+    }
 }

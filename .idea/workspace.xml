@@ -59,7 +59,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../SpringBoot/restapi" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -74,18 +74,18 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\LearnGit\Nuce_shop\src\main\webapp\WEB-INF\views\user_view" />
       <recent name="E:\Project\Nuce_shop\target" />
       <recent name="E:\Project\Nuce_shop\target\Nuce_shop\resources\img" />
       <recent name="E:\Project\Nuce_shop\src\main\webapp\resources\img" />
       <recent name="E:\Project\Nuce_shop\src\main\webapp\resources" />
-      <recent name="E:\Project\Nuce_shop\target\Nuce_shop\resources\images\product" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\LearnGit\Nuce_shop\src\main\webapp\WEB-INF" />
+      <recent name="E:\LearnGit\Nuce_shop\src\main\resources" />
       <recent name="E:\Project\Nuce_shop\src\main\webapp\resources\user" />
       <recent name="E:\Project\Nuce_shop\src\main\webapp\resources\admin\css" />
       <recent name="E:\Project\Nuce_shop\src\main\webapp\resources\admin\js" />
-      <recent name="E:\Project\Nuce_shop\src\main\webapp\resources\admin" />
-      <recent name="E:\Project\Nuce_shop\src\main\webapp\resources\css" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="com.nuce.controller" />
@@ -102,6 +102,17 @@
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -366,7 +377,38 @@
       <workItem from="1626366157024" duration="2127000" />
       <workItem from="1626421969752" duration="3402000" />
       <workItem from="1626425435499" duration="5575000" />
-      <workItem from="1626455907618" duration="5624000" />
+      <workItem from="1626455907618" duration="6180000" />
+      <workItem from="1626511114372" duration="527000" />
+      <workItem from="1626547212616" duration="491000" />
+      <workItem from="1626586438121" duration="6191000" />
+      <workItem from="1626600346934" duration="852000" />
+      <workItem from="1626755420480" duration="5777000" />
+      <workItem from="1626790259491" duration="11167000" />
+      <workItem from="1626840461057" duration="614000" />
+      <workItem from="1626855663054" duration="2352000" />
+      <workItem from="1626885130728" duration="881000" />
+      <workItem from="1626886645959" duration="9000" />
+      <workItem from="1627023868626" duration="7964000" />
+      <workItem from="1627059414660" duration="78000" />
+      <workItem from="1627061995242" duration="3544000" />
+      <workItem from="1627088994122" duration="438000" />
+      <workItem from="1627114582478" duration="1448000" />
+      <workItem from="1627120385207" duration="1786000" />
+      <workItem from="1627195414985" duration="2567000" />
+      <workItem from="1627264952003" duration="61000" />
+      <workItem from="1627265056440" duration="195000" />
+      <workItem from="1627855132249" duration="4231000" />
+      <workItem from="1627892828841" duration="702000" />
+      <workItem from="1627913311576" duration="55000" />
+      <workItem from="1628335581667" duration="2391000" />
+      <workItem from="1628762414333" duration="1266000" />
+      <workItem from="1628791891524" duration="1136000" />
+      <workItem from="1628821562366" duration="4833000" />
+      <workItem from="1628829234711" duration="1257000" />
+      <workItem from="1628830744301" duration="2168000" />
+      <workItem from="1628833022682" duration="269000" />
+      <workItem from="1628833420156" duration="11533000" />
+      <workItem from="1628855442692" duration="431000" />
     </task>
     <servers />
   </component>

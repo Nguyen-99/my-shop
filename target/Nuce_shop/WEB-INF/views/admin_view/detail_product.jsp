@@ -58,11 +58,11 @@
 <section class="product-shop spad page-details">
     <c:choose>
         <c:when test="${product.category.gender}">
-            <a style="margin-left: 30px;" class="btn btn-info add-new" href="<c:url value="/product/male"/>"><i
+            <a style="margin-left: 30px;" class="btn btn-info add-new" href="<c:url value="/admin/product/male"/>"><i
                     class="fa arrow_back"></i></a>
         </c:when>
         <c:when test="${!product.category.gender}">
-            <a style="margin-left: 30px;" class="btn btn-info add-new" href="<c:url value="/product/female"/>"><i
+            <a style="margin-left: 30px;" class="btn btn-info add-new" href="<c:url value="/admin/product/female"/>"><i
                     class="fa arrow_back"></i></a>
         </c:when>
     </c:choose>
@@ -156,7 +156,7 @@
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
-                                <c:url value="/product/add-detail" var="url"/>
+                                <c:url value="/admin/product/add-detail" var="url"/>
                                 <form:form modelAttribute="new_detail" action="${url}" method="post">
                                     <div class="modal-body">
                                         <input type="hidden" name="product_id" value="${product.id}">
@@ -210,7 +210,7 @@
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
-                                        <form action="<c:url value="/product/edit-detail"/>" method="post">
+                                        <form action="<c:url value="/admin/product/edit-detail"/>" method="post">
                                             <div class="modal-body">
                                                 <input type="hidden" name="id" value="${detail.id}"/>
                                                 <input type="hidden" name="product_id" value="${product.id}">

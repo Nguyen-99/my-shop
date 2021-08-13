@@ -20,7 +20,7 @@ import java.io.*;
 import java.util.List;
 
 @Controller
-@RequestMapping("/product")
+@RequestMapping("/admin/product")
 public class ProductController {
     @Autowired
     private ProductService productService;
@@ -83,7 +83,7 @@ public class ProductController {
     @GetMapping("/male/search")
     public String searchMale(ModelMap modelMap, @RequestParam("category_id") int categoryId,@RequestParam("query") String query){
         if(categoryId==0&&query.equals("")){
-            return "redirect:/product/female";
+            return "redirect:/admin/product/female";
         }
         List<Product> products=null;
         if(categoryId==0){
@@ -101,7 +101,7 @@ public class ProductController {
     @GetMapping("/female/search")
     public String searchFemale(ModelMap modelMap, @RequestParam("category_id") int categoryId,@RequestParam("query") String query){
         if(categoryId==0&&query.equals("")){
-            return "redirect:/product/female";
+            return "redirect:/admin/product/female";
         }
         List<Product> products=null;
         if(categoryId==0){
@@ -150,9 +150,9 @@ public class ProductController {
             redirectAttributes.addFlashAttribute("msg", "Thêm mới thất bại");
         }
         if(category.isGender()){
-            return "redirect:/product/male";
+            return "redirect:/admin/product/male";
         }else {
-            return "redirect:/product/female";
+            return "redirect:/admin/product/female";
         }
     }
 
@@ -166,9 +166,9 @@ public class ProductController {
             redirectAttributes.addFlashAttribute("msg", "Xóa thất bại");
         }
         if(category.isGender()){
-            return "redirect:/product/male";
+            return "redirect:/admin/product/male";
         }else {
-            return "redirect:/product/female";
+            return "redirect:/admin/product/female";
         }
     }
 
@@ -208,9 +208,9 @@ public class ProductController {
             redirectAttributes.addFlashAttribute("msg", "Sửa thất bại");
         }
         if(category.isGender()){
-            return "redirect:/product/male";
+            return "redirect:/admin/product/male";
         }else {
-            return "redirect:/product/female";
+            return "redirect:/admin/product/female";
         }
     }
     @GetMapping("/detail-product/{id}")
@@ -229,14 +229,14 @@ public class ProductController {
         int id = Integer.parseInt(request.getParameter("product_id"));
         detailProduct.setProduct(productService.getById(id));
         detailProductService.insertOrUpdate(detailProduct);
-        return "redirect:/product/detail-product/" + id;
+        return "redirect:/admin/product/detail-product/" +id;
     }
 
     @GetMapping("/delete-detail/{id}")
     public String deleteDetail(@PathVariable("id") int id) {
         int productId = detailProductService.getById(id).getProduct().getId();
         detailProductService.delete(id);
-        return "redirect:/product/detail-product/" + productId;
+        return "redirect:admin/product/detail-product/" + productId;
     }
 
     @PostMapping("/edit-detail")
@@ -253,7 +253,7 @@ public class ProductController {
         detailProduct.setColor(color);
         detailProduct.setNumber(number);
         detailProductService.update(detailProduct);
-        return "redirect:/product/detail-product/" + productId;
+        return "redirect:/admin/product/detail-product/" + productId;
     }
 
     @GetMapping("/image/{id}")
@@ -280,7 +280,7 @@ public class ProductController {
             image.setProduct(productService.getById(productId));
             imageService.insert(image);
         }
-        return "redirect:/product/image/"+productId;
+        return "redirect:/admin/product/image/"+productId;
     }
     @PostMapping("/image/edit")
     public String editImage(@RequestParam("file") MultipartFile file,@RequestParam("id") int id,
@@ -301,12 +301,12 @@ public class ProductController {
             image.setProduct(productService.getById(productId));
             imageService.update(image);
         }
-        return "redirect:/product/image/"+productId;
+        return "redirect:/admin/product/image/"+productId;
     }
     @GetMapping("/image/delete/{id}")
     public String deleteImage(@PathVariable("id") int id){
         int productId=imageService.getById(id).getProduct().getId();
         imageService.delete(id);
-        return "redirect:/product/image/"+productId;
+        return "redirect:/admin/product/image/"+productId;
     }
 }

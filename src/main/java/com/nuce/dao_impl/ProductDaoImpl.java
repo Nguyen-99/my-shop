@@ -232,6 +232,37 @@ public class ProductDaoImpl implements ProductDao {
     }
 
     @Override
+    public List<Product> search(String query) {
+        List<Product> products=new ArrayList<>();
+        Connection con=JDBCConnection.getJDBCConnection();
+        String sql="select * from product inner join category on product.category_id=category.id" +
+                " where (lower(product.name) like lower(?) or lower(category.name) like lower(?))";
+        try {
+            PreparedStatement ps=con.prepareStatement(sql);
+            ps.setString(1,"%"+query+"%");
+            ps.setString(2,"%"+query+"%");
+            ResultSet rs=ps.executeQuery();
+            while (rs.next()){
+                Product product=new Product();
+                product.setId(rs.getInt("id"));
+                product.setName(rs.getString("name"));
+                product.setPrice(rs.getDouble("price"));
+                product.setImage(rs.getString("image"));
+                product.setDescription(rs.getString("description"));
+                product.setActive(rs.getBoolean("active"));
+                product.setPriority(rs.getInt("priority"));
+                product.setCreateTime(rs.getTimestamp("create_time"));
+                product.setCategory(categoryDao.getById(rs.getInt("category_id")));
+                products.add(product);
+            }
+            con.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return products;
+    }
+
+    @Override
     public List<Product> search(boolean gender,int categoryId,String query) {
         List<Product> products=new ArrayList<>();
         Connection con=JDBCConnection.getJDBCConnection();

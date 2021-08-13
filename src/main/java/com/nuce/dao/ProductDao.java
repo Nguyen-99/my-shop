@@ -8,4 +8,5 @@ public interface ProductDao extends BaseDao<Product> {
     List<Product> getProductByCategory(int id);
     List<Product> search(boolean gender,int categoryId,String query);
     List<Product> search(boolean gender,String query);
+    List<Product> search(String query);
 }

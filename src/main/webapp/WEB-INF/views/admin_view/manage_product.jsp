@@ -108,14 +108,14 @@
                         <div class="row">
                             <div class="col-sm-8"><h2>Danh sách <b>Sản phẩm</b></h2></div>
                             <div class="col-sm-4">
-                                <a href="<c:url value="/product/add-product"/>" class="btn btn-info add-new"><i
+                                <a href="<c:url value="/admin/product/add-product"/>" class="btn btn-info add-new"><i
                                         class="fa fa-plus"></i> Thêm mới</a>
                             </div>
                         </div>
                     </div>
                     <c:choose>
                         <c:when test="${gender}">
-                            <form action="<c:url value="/product/male/search"/>" class="d-flex col-sm-8">
+                            <form action="<c:url value="/admin/product/male/search"/>" class="d-flex col-sm-8">
                                 <select name="category_id">
                                     <c:if test="${category!=null}">
                                         <option value="${category.id}">${category.name}</option>
@@ -132,7 +132,7 @@
                             </form>
                         </c:when>
                         <c:when test="${!gender}">
-                            <form action="<c:url value="/product/female/search"/>" class="d-flex col-sm-8">
+                            <form action="<c:url value="/admin/product/female/search"/>" class="d-flex col-sm-8">
                                 <select name="category_id">
                                     <c:if test="${category!=null}">
                                         <option value="${category.id}">${category.name}</option>
@@ -189,14 +189,14 @@
                                 </td>
                                 <td>${product.priority}</td>
                                 <td>
-                                    <a href="<c:url value="/product/detail-product/${product.id}"/>"
+                                    <a href="<c:url value="/admin/product/detail-product/${product.id}"/>"
                                        title="Chi tiết"><i class="fas fa-info-circle"></i></a>
-                                    <a href="<c:url value="/product/image/${product.id}"/>"
+                                    <a href="<c:url value="/admin/product/image/${product.id}"/>"
                                        title="Ảnh"><i class="fas fa-image"></i></a>
                                     <br>
-                                    <a href="<c:url value="/product/edit-product/${product.id}"/>" class="edit"
+                                    <a href="<c:url value="/admin/product/edit-product/${product.id}"/>" class="edit"
                                        title="Sửa"><i class="fas fa-pen"></i></a>
-                                    <a href="<c:url value="/product/delete-product/${product.id}"/>" class="delete"
+                                    <a href="<c:url value="/admin/product/delete-product/${product.id}"/>" class="delete"
                                        title="Xóa" onclick="return confirm('Chắc chắn muốn xóa?');"><i
                                             class="fas fa-trash-alt"></i></a>
                                 </td>
@@ -210,14 +210,14 @@
                                 <c:when test="${gender}">
                                     <c:forEach begin="1" end="${num_page}" var="i">
                                         <li class="page-item">
-                                            <a href="<c:url value="/product/male/${i}"/>" class="page-link">${i}</a>
+                                            <a href="<c:url value="/admin/product/male/${i}"/>" class="page-link">${i}</a>
                                         </li>
                                     </c:forEach>
                                 </c:when>
                                 <c:when test="${!gender}">
                                     <c:forEach begin="1" end="${num_page}" var="i">
                                         <li class="page-item">
-                                            <a href="<c:url value="/product/female/${i}"/>" class="page-link">${i}</a>
+                                            <a href="<c:url value="/admin/product/female/${i}"/>" class="page-link">${i}</a>
                                         </li>
                                     </c:forEach>
                                 </c:when>

@@ -6,6 +6,7 @@ import com.nuce.model.Bill;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -25,5 +26,20 @@ public class BillService implements BillDao {
     @Override
     public Bill insert(Bill bill) {
         return billDao.insert(bill);
+    }
+
+    @Override
+    public List<Bill> getByDate(Date date) {
+        return billDao.getByDate(date);
+    }
+
+    @Override
+    public List<Bill> getAll() {
+        return billDao.getAll();
+    }
+
+    @Override
+    public List<Bill> searchByDate(Date date1, Date date2) {
+        return billDao.searchByDate(date1,date2);
     }
 }

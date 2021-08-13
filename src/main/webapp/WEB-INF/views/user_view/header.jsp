@@ -41,8 +41,8 @@
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-6">
-                    <form class="form-inline">
-                        <input class="form-control col-lg-9 mr-sm-3" type="search" placeholder="Tìm kiếm...">
+                    <form class="form-inline" action="<c:url value="/timkiem"/>">
+                        <input class="form-control col-lg-9 mr-sm-3" type="search" name="query" placeholder="Tìm kiếm...">
                         <button class="btn btn-outline-dark" type="submit">Tìm kiếm</button>
                     </form>
                 </div>

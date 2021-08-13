@@ -73,7 +73,7 @@ public class Bill {
     }
 
     public String getDate(){
-        DateFormat dateFormat=new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+        DateFormat dateFormat=new SimpleDateFormat("dd/MM/yyyy hh:mm a");
         String date=dateFormat.format(createDate);
         return date;
     }
